@@ -1,7 +1,6 @@
 class PurpleBall{
-    constructor(posX, state){
+    constructor(posX){
         this.posX = posX;
-        this.state = state;
     };
 
     draw(){
@@ -20,25 +19,19 @@ class PurpleBall{
     }
 
     evaluate(){
+        
         if(dist(this.posX, 180, 160, 180) >= -12 && dist(this.posX, 180, 160, 180) <= 12){
-            this.state = true;
-        }else if(dist(this.posX, 180, 160, 180) >= -40 && dist(this.posX, 180, 160, 180) >= -13 && dist(this.posX, 180, 160, 180) >= 13 && dist(this.posX, 180, 160, 180) < 40){
-            this.state = false;
+            
+            return "centro";
+
+        } 
+
+        if(dist(this.posX, 180, 160, 180) >= -40  && dist(this.posX, 180, 160, 180) >= -13 && dist(this.posX, 180, 160, 180) >= 13 && dist(this.posX, 180, 160, 180) < 40){
+            
+            return "cerca";
+
         };
 
-        if(this.state == true){
-            if(dist(this.posX, 180, 160, 180) >= -12 && dist(this.posX, 180, 160, 180) <= 12){
-                console.log('Estoy en el centro');
-                this.points = true;
-                //original es 4
-            } 
-        }else if(this.state == false){
-            if(dist(this.posX, 180, 160, 180) >= -40  && dist(this.posX, 180, 160, 180) >= -13 && dist(this.posX, 180, 160, 180) >= 13 && dist(this.posX, 180, 160, 180) < 40){
-                console.log('estuve cerca');
-                this.points = false;
-                //original es 30
-            };
-        }
     }
 }
 
