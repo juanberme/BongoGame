@@ -1,7 +1,8 @@
 class BlueBall{
 
-    constructor(posX){
+    constructor(posX, posY){
         this.posX = posX;
+        this.posY = posY;
     };
 
     draw(){
@@ -16,7 +17,7 @@ class BlueBall{
             colored = color(255,0,0);
         };
         fill(colored);
-        circle(this.posX, 180, 80);
+        circle(this.posX, this.posY, 80);
     }
 
     evaluate(){

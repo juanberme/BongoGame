@@ -1,8 +1,13 @@
+let NameCarrera = "Musica"; // poner el nombre de la carrera;
+
 var screen;
+
 var firstScreen;
 var secondScreen;
 var thirdScreen;
 var gameScreen;
+var forthScreen;
+
 var startBtn;
 var continueBtn;
 var bongo;
@@ -16,10 +21,18 @@ var purpleBalls;
 var blueArray;
 var purpleArray;
 
+var blueArray2;
+var purpleArray2;
+
 var allBalls;
 var purplePosX;
 var bluePosX;
 var defaultPosX;
+
+var purplePosX2;
+var bluePosX2;
+var defaultPosX2Par;
+var defaultPosX2Impar
 
 var perfecto;
 var bueno;
@@ -45,6 +58,7 @@ function preload(){
     secondScreen = loadImage('assets/pantalla2.png');
     thirdScreen = loadImage('assets/pantalla3.png');
     gameScreen = loadImage('assets/pantallaJuego.png');
+    forthScreen = loadImage('assets/pantalla4.png');
 
     //buttons
     startBtn = loadImage('assets/btn_jugar.png');
@@ -59,18 +73,29 @@ function preload(){
     //balls
     blueBalls = loadImage('assets/caritaPerfecto.png');
     
+    //case 3 positions
     purplePosX = 1080;
     bluePosX = purplePosX +75;
     defaultPosX = 145;
-    
+
+    //case 4 positions
+    bluePosX2 = 1080;
+    defaultPosX2Par = 235;
+    defaultPosX2Impar = 110;
+    purplePosX2;
+
     //estados
     bueno = loadImage('assets/bueno.png');
     malo = loadImage('assets/malo.png');
     perfecto = loadImage('assets/perfecto.png');
 
     //arrays
-    blueArray = new Array(5);
-    purpleArray = new Array(5);
+    blueArray = new Array(36);
+    purpleArray = new Array(36);
+
+    purpleArray2 = new Array(24);
+    blueArray2 = new Array(48);
+
     //PurpleBalls = new PurpleBall(880, 180, 80);
     
     //sonidos
@@ -123,18 +148,20 @@ function draw(){
         case 3:
             image(gameScreen, 0, 0);
 
+            image(bongoDefault, 349, 455);
+
             if(create1 === true){
                 //para crear 36 pelotas moradas
                 for(let i = 0; i < purpleArray.length; i++){
                     newPurplePosX = purplePosX + defaultPosX* i
-                    purpleArray[i] = new PurpleBall(newPurplePosX);
+                    purpleArray[i] = new PurpleBall(newPurplePosX, 262);
                     purpleArray[i].draw();
                     
                 }
 
                 for(let a = 0; a < blueArray.length; a++){
                     let newBluePosX = bluePosX + defaultPosX* a
-                    blueArray[a] = new BlueBall(newBluePosX);
+                    blueArray[a] = new BlueBall(newBluePosX, 180);
                     blueArray[a].draw();
 
                 }
@@ -150,51 +177,55 @@ function draw(){
                         bluePosX -=3;
 
                 }}, 10000);
+
+                if(keyIsDown(81)){
+                    console.log("lista la q");
+                    image(bongoPurple, 349, 455);
+                    
+                    for(let q = 0; q <purpleArray.length; q++){
+                        switch(purpleArray[q].evaluate()){
+                            case 'centro':
+                                image(perfecto, 0, 184);
+                                break;
+    
+                            case 'cerca':
+                                image(bueno, 0, 184);
+                                break;
+    
+                            default:
+                                
+                        }
+                        
+                    }
+                }
+    
+                if(keyIsDown(80)){
+                    console.log("lista la p");
+                    image(bongoBlue, 349, 455);
+    
+                    for(let q = 0; q <blueArray.length; q++){
+                        switch(blueArray[q].evaluate()){
+                            case 'centro':
+                                image(perfecto, 0, 184);
+                                break;
+    
+                            case 'cerca':
+                                image(bueno, 0, 184);
+                                break;
+    
+                            default:
+                                
+                        }
+                        
+                    }
+                    
+                }
+                
             }
+
             
-            image(bongoDefault, 349, 455);
-
-            if(keyIsDown(81)){
-                //console.log("lista la q");
-                image(bongoPurple, 349, 455);
-                
-                for(let q = 0; q <purpleArray.length; q++){
-                    switch(purpleArray[q].evaluate()){
-                        case 'centro':
-                            image(perfecto, 0, 184);
-                            break;
-
-                        case 'cerca':
-                            image(bueno, 0, 184);
-                            break;
-
-                        default:
-                            
-                    }
-                    
-                }
-            }
-            if(keyIsDown(80)){
-                //console.log("lista la p");
-                image(bongoBlue, 349, 455);
-
-                for(let q = 0; q <blueArray.length; q++){
-                    switch(blueArray[q].evaluate()){
-                        case 'centro':
-                            image(perfecto, 0, 184);
-                            break;
-
-                        case 'cerca':
-                            image(bueno, 0, 184);
-                            break;
-
-                        default:
-                            
-                    }
-                    
-                }
-                
-            }
+            
+            
             
             //text
             textSize(32);
@@ -205,6 +236,7 @@ function draw(){
 
         case 4:
             image(gameScreen, 0, 0);
+            image(bongoDefault, 349, 455);
             levelCounter = 2;
 
             textSize(32);
@@ -213,69 +245,73 @@ function draw(){
 
             if(create2 === true){
                 //para crear 36 pelotas moradas
-                for(let i = 0; i < purpleArray.length; i++){
-                    newPurplePosX = purplePosX + defaultPosX* i
-                    purpleArray[i] = new PurpleBall(newPurplePosX);
-                    purpleArray[i].draw();
+                for(let i = 0; i < purpleArray2.length; i++){
+                    let newPurplePosX = bluePosX2 + (i * defaultPosX2Par) + (defaultPosX2Impar * 2 * (i+1));
+                    
+                    //bluePosX2 + ((i + 1) * defaultPosX2Par) +  ((i + 1) * defaultPosX2Impar) ;
+                    purpleArray2[i] = new PurpleBall(newPurplePosX, 180);
+                    purpleArray2[i].draw();
                     
                 }
 
-                for(let a = 0; a < blueArray.length; a++){
-                    let newBluePosX = bluePosX + defaultPosX* a
-                    blueArray[a] = new BlueBall(newBluePosX);
-                    blueArray[a].draw();
+                for(let a = 0; a < blueArray2.length; a++){
+                    let newBluePosX = bluePosX2 + (Math.floor(a/2) * defaultPosX2Par) + (a * defaultPosX2Impar);
+                    
+                    blueArray2[a] = new BlueBall(newBluePosX, 262);
+                    blueArray2[a].draw();
 
                 }
 
                 setTimeout(()=>{
-                    if(bluePosX < -5220){
-                        purplePosX = -5300;
-                        bluePosX = -5300;
+                    if(bluePosX2 < -10000){
+                        purplePosX2 = -10000;
+                        bluePosX2 = -10000;
                     
                     }else{
                         purplePosX -=3;
-                        bluePosX -=3;
-                //corregir a 10seg
-                }}, 1000);
-            }
-            image(bongoDefault, 349, 455);
-
-            if(keyIsDown(81)){
-                //console.log("lista la q");
-                image(bongoPurple, 349, 455);
+                        bluePosX2 -=3;
                 
-                for(let q = 0; q <purpleArray.length; q++){
-                    switch(purpleArray[q].evaluate()){
-                        case 'centro':
-                            image(perfecto, 0, 184);
-                            break;
+                }}, 10000);
 
-                        case 'cerca':
-                            image(bueno, 0, 184);
-                            break;
-
-                        default:
-                            
-                    }
+                if(keyIsDown(81)){
+                    //console.log("lista la q");
+                    image(bongoPurple, 349, 455);
                     
+                    for(let q = 0; q <purpleArray2.length; q++){
+                        switch(purpleArray2[q].evaluate()){
+                            case 'centro':
+                                image(perfecto, 0, 184);
+                                break;
+    
+                            case 'cerca':
+                                image(bueno, 0, 184);
+                                break;
+    
+                            default:
+                                
+                        }
+                        
+                    }
                 }
-            }
-            if(keyIsDown(80)){
-                //console.log("lista la p");
-                image(bongoBlue, 349, 455);
-
-                for(let q = 0; q <blueArray.length; q++){
-                    switch(blueArray[q].evaluate()){
-                        case 'centro':
-                            image(perfecto, 0, 184);
-                            break;
-
-                        case 'cerca':
-                            image(bueno, 0, 184);
-                            break;
-
-                        default:
-                            
+                
+                if(keyIsDown(80)){
+                    //console.log("lista la p");
+                    image(bongoBlue, 349, 455);
+    
+                    for(let q = 0; q <blueArray2.length; q++){
+                        switch(blueArray2[q].evaluate()){
+                            case 'centro':
+                                image(perfecto, 0, 184);
+                                break;
+    
+                            case 'cerca':
+                                image(bueno, 0, 184);
+                                break;
+    
+                            default:
+                                
+                        }
+                        
                     }
                     
                 }
@@ -283,6 +319,11 @@ function draw(){
             }
 
             break;
+
+            case 5:
+                image(forthScreen, 0, 0);
+
+                break;
     }
     text('X:'+mouseX+ 'Y:'+mouseY, mouseX, mouseY);
 }
@@ -317,15 +358,20 @@ function mouseClicked(){
     }
 
     if(screen == 4){
-        //level2.play();
+        level2.play();
         create2 = true;
+        if(create2 === true){
+            setTimeout(()=>{
+                screen = 5;
+                }, 60000);
+        }
     }
 }
 
 function keyPressed(){
     if(screen == 3){
         //presiona la tecla q
-        if(keyCode === 81){
+        if(keyCode === 81 && create1 === true){
             bongoMoradoSonido.play();
             for(let h = 0; h < purpleArray.length; h++){
                 purpleArray[h].evaluate();
@@ -346,7 +392,7 @@ function keyPressed(){
         }
         
         //presiona la tecla p
-        if(keyCode === 80){
+        if(keyCode === 80 && create1 === true){
             bongoAzulSonido.play();
             for(let e = 0; e < blueArray.length; e++){
                 blueArray[e].evaluate();
@@ -372,18 +418,18 @@ function keyPressed(){
     if(screen == 4){
 
         //presiona la tecla q
-        if(keyCode === 81){
+        if(keyCode === 81 && create2 === true){
             bongoMoradoSonido.play();
 
-            for(let h = 0; h < purpleArray.length; h++){
-                purpleArray[h].evaluate();
+            for(let h = 0; h < purpleArray2.length; h++){
+                purpleArray2[h].evaluate();
 
-                if(purpleArray[h].evaluate() === 'centro'){
+                if(purpleArray2[h].evaluate() === 'centro'){
                     console.log('Estoy en el centro');
                     counter2 += 2;
                 }
 
-                if(purpleArray[h].evaluate() === 'cerca'){
+                if(purpleArray2[h].evaluate() === 'cerca'){
                     console.log('estuve cerca');
                     counter2 += 1;
                 }
@@ -394,18 +440,18 @@ function keyPressed(){
         }
 
          //presiona la tecla p
-        if(keyCode == 80){
+        if(keyCode == 80 && create2 === true){
             bongoAzulSonido.play();
 
-            for(let e = 0; e < blueArray.length; e++){
-                blueArray[e].evaluate();
+            for(let e = 0; e < blueArray2.length; e++){
+                blueArray2[e].evaluate();
                 
-                if(blueArray[e].evaluate() === 'centro'){
+                if(blueArray2[e].evaluate() === 'centro'){
                     console.log('Estoy en el centro');
                     counter2 += 2;
                 } 
 
-                if(blueArray[e].evaluate() === 'cerca'){
+                if(blueArray2[e].evaluate() === 'cerca'){
                     console.log('estuve cerca');
                     counter2 += 1;
                 }

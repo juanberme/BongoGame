@@ -1,6 +1,7 @@
 class PurpleBall{
-    constructor(posX){
+    constructor(posX, posY){
         this.posX = posX;
+        this.posY = posY;
     };
 
     draw(){
@@ -15,7 +16,7 @@ class PurpleBall{
             colored = color(255,0,0);
         };
         fill(colored);
-        circle(this.posX, 262, 80);
+        circle(this.posX, this.posY, 80);
     }
 
     evaluate(){
